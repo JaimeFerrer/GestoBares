@@ -43,7 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return `
       <article class="bar-card" data-card-id="${bar.id}">
         <div class="bar-card__media">
-          ${bar.imagenTexto}
+          <span aria-hidden="true">${bar.imagenTexto}</span>
+          ${bar.foto ? `<img src="${bar.foto}" alt="" loading="lazy" onerror="this.remove()">` : ""}
           <button class="bar-card__fav" data-fav="${bar.id}" title="Marcar como favorito" aria-label="Favorito">${esFav ? "❤️" : "🤍"}</button>
         </div>
         <div class="bar-card__body">

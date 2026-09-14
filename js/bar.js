@@ -24,7 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <button class="btn btn-outline" id="btn-favorito">${GestoStorage.esFavorito(bar.id) ? "❤️ En favoritos" : "🤍 Añadir a favoritos"}</button>
       </div>
-      <div class="bar-card__media" style="height:160px;border-radius:8px;font-size:4rem;margin:14px 0;">${bar.imagenTexto}</div>
+      <div class="bar-card__media" style="height:220px;border-radius:8px;font-size:4rem;margin:14px 0;">
+        <span aria-hidden="true">${bar.imagenTexto}</span>
+        ${bar.foto ? `<img src="${bar.foto}" alt="${GestoStorage.escapeHTML(bar.nombre)}" loading="lazy" onerror="this.remove()">` : ""}
+      </div>
       <p>${GestoStorage.escapeHTML(bar.descripcion)}</p>
       <div>${bar.etiquetas.map(t => `<span class="tag">${GestoStorage.escapeHTML(t)}</span>`).join("")}</div>
     </section>

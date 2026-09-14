@@ -43,7 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     cont.innerHTML = favoritos.map(b => `
       <div class="bar-card">
-        <div class="bar-card__media">${b.imagenTexto}</div>
+        <div class="bar-card__media">
+          <span aria-hidden="true">${b.imagenTexto}</span>
+          ${b.foto ? `<img src="${b.foto}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+        </div>
         <div class="bar-card__body">
           <h3>${GestoStorage.escapeHTML(b.nombre)}</h3>
           <p class="bar-card__meta">${GestoStorage.escapeHTML(b.zona)}</p>
