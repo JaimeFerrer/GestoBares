@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } catch (e) {
     console.warn("No se pudo cargar el mapa (Leaflet/OpenStreetMap no disponible):", e);
     const mapEl = document.getElementById("map");
-    if (mapEl) mapEl.outerHTML = `<p class="muted">El mapa no se ha podido cargar (sin conexión a OpenStreetMap). El listado de bares sigue funcionando con normalidad.</p>`;
+    if (mapEl) mapEl.outerHTML = `<p class="muted">Mapa no disponible en este momento. Puedes seguir buscando y filtrando bares en el listado de abajo.</p>`;
   }
 
   function resaltar(card) {

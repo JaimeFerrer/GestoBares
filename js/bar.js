@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <section class="card" id="seccion-chat">
       <h2>Chat con ${GestoStorage.escapeHTML(bar.nombre)}</h2>
-      <p class="muted">Chat de demostración: tus mensajes se guardan en este navegador. Para un chat en tiempo real entre varios usuarios haría falta un servidor con websockets (ver README).</p>
+      <p class="muted">Escribe al bar para consultar disponibilidad, hacer una petición especial o cualquier duda antes de tu visita.</p>
       <ul id="chat-messages"></ul>
       <form id="chat-form">
         <input type="text" id="chat-input" placeholder="Escribe tu mensaje…" required>
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     GestoMap.crearMapaBar("mapa-bar", bar);
   } catch (e) {
     console.warn("No se pudo cargar el mapa (Leaflet/OpenStreetMap no disponible):", e);
-    document.getElementById("mapa-bar").outerHTML = `<p class="muted">El mapa no se ha podido cargar (sin conexión a OpenStreetMap).</p>`;
+    document.getElementById("mapa-bar").outerHTML = `<p class="muted">Mapa no disponible en este momento. Consulta la dirección arriba.</p>`;
   }
   document.getElementById("link-como-llegar").href = GestoMap.enlaceComoLlegar(bar);
 
