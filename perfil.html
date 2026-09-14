@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi perfil · GestoBares</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div id="app-header"></div>
+    <main class="main">
+      <section class="hero">
+        <h1 class="mt-0">Mi perfil</h1>
+        <p>Guarda tus datos para agilizar tus próximas reservas y configura cómo quieres recibir avisos.</p>
+      </section>
+
+      <section class="card">
+        <h2>Datos y notificaciones</h2>
+        <form id="form-perfil">
+          <div class="form-grid">
+            <div class="campo">
+              <label for="p-nombre">Nombre</label>
+              <input type="text" id="p-nombre">
+            </div>
+            <div class="campo">
+              <label for="p-email">Correo electrónico</label>
+              <input type="email" id="p-email">
+            </div>
+          </div>
+          <div class="campo" style="margin-top:10px;">
+            <label><input type="checkbox" id="p-notif-email" style="width:auto;"> Avisarme por correo (confirmaciones y recordatorios)</label>
+          </div>
+          <div class="campo">
+            <label><input type="checkbox" id="p-notif-push" style="width:auto;"> Avisarme con notificaciones del navegador</label>
+          </div>
+          <p class="muted">El envío real de SMS y correos automáticos requiere un servidor propio (Twilio / SendGrid); queda documentado como mejora futura en el README. Mientras tanto, cada reserva confirmada ofrece un enlace para enviarte tú mismo el correo de confirmación.</p>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Resumen de reservas</h2>
+        <div id="resumen-reservas"></div>
+      </section>
+
+      <section>
+        <h2>Mis bares favoritos</h2>
+        <div id="lista-favoritos" class="favoritos-grid"></div>
+      </section>
+    </main>
+    <div id="app-footer"></div>
+  </div>
+
+  <script src="data/bares.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/perfil.js"></script>
+  <script>GestoUI.montarLayout("perfil.html");</script>
+</body>
+</html>

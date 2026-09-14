@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GestoBares — Bares de Huesca</title>
+  <meta name="description" content="Encuentra, valora y reserva mesa en los bares de Huesca ciudad.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div id="app-header"></div>
+
+    <main class="main">
+      <section class="hero">
+        <h1 class="mt-0">GestoBares</h1>
+        <p>Descubre los bares de Huesca ciudad, consulta su ubicación en el mapa, lee y deja opiniones, chatea con el establecimiento y reserva tu mesa en segundos.</p>
+      </section>
+
+      <section class="bars" id="listabares">
+        <h2>Bares de Huesca</h2>
+        <div class="filtros">
+          <input type="text" id="search-bar" class="search-bar" placeholder="Buscar por nombre, tipo o zona…">
+          <select id="filtro-tipo"><option value="">Todos los tipos</option></select>
+          <select id="filtro-zona"><option value="">Todas las zonas</option></select>
+          <select id="filtro-valoracion">
+            <option value="0">Cualquier valoración</option>
+            <option value="3">3★ o más</option>
+            <option value="4">4★ o más</option>
+            <option value="5">5★</option>
+          </select>
+          <label style="display:flex;align-items:center;gap:6px;">
+            <input type="checkbox" id="filtro-favoritos" style="width:auto;"> Solo favoritos
+          </label>
+        </div>
+        <p id="contador-resultados" class="muted"></p>
+        <div class="bar-list" id="bar-list"></div>
+      </section>
+
+      <section class="map" id="mapa">
+        <h2>Mapa interactivo</h2>
+        <p class="muted">Explora los bares en el mapa: haz zoom, arrastra y pulsa sobre un marcador para ver su ficha.</p>
+        <div id="map"></div>
+      </section>
+    </main>
+
+    <div id="app-footer"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data/bares.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/main.js"></script>
+  <script>GestoUI.montarLayout("index.html");</script>
+</body>
+</html>

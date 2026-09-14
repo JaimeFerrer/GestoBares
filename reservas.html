@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis reservas · GestoBares</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div id="app-header"></div>
+    <main class="main">
+      <section class="hero">
+        <h1 class="mt-0">Mis reservas</h1>
+        <p>Consulta, modifica o cancela tus reservas. Localízalas con el correo electrónico que usaste al reservar.</p>
+        <div class="campo" style="max-width:360px;">
+          <label for="buscar-email">Tu correo electrónico</label>
+          <input type="email" id="buscar-email" placeholder="tucorreo@ejemplo.com">
+        </div>
+      </section>
+      <section id="reservas-lista">
+        <h2>Reservas</h2>
+        <div id="lista-reservas" class="reservation-list" style="display:flex;flex-direction:column;gap:14px;"></div>
+      </section>
+    </main>
+    <div id="app-footer"></div>
+  </div>
+
+  <script src="data/bares.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/reservas.js"></script>
+  <script>GestoUI.montarLayout("reservas.html");</script>
+</body>
+</html>
