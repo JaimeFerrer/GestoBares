@@ -17,8 +17,18 @@ const GestoMap = (() => {
     });
   }
 
+  function comprobarLeafletDisponible() {
+    // Si el CSS de Leaflet no ha podido cargar (CDN bloqueado, sin conexión,
+    // política de seguridad del sitio donde se incruste la app), el mapa se
+    // vería roto aunque la librería JS sí esté disponible: se aborta antes
+    // para que el llamante muestre el mensaje de repuesto en su lugar.
+    if (typeof L === "undefined") throw new Error("Leaflet no está disponible.");
+    if (window.__leafletCssFailed) throw new Error("El CSS de Leaflet no se ha podido cargar.");
+  }
+
   /** Mapa con un marcador por cada bar del catálogo. Devuelve {map, marcadores}. */
   function crearMapaGeneral(containerId, bares, onSeleccionar) {
+    comprobarLeafletDisponible();
     const map = L.map(containerId).setView(HUESCA_CENTRO, 15);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -40,6 +50,7 @@ const GestoMap = (() => {
 
   /** Mini-mapa centrado en un único bar (página de ficha). */
   function crearMapaBar(containerId, bar) {
+    comprobarLeafletDisponible();
     const map = L.map(containerId, { scrollWheelZoom: false }).setView([bar.lat, bar.lng], 16);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
