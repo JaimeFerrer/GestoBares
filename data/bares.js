@@ -15,7 +15,28 @@
  * sitúan cada bar en su calle/zona real dentro del casco urbano de Huesca.
  * Cualquiera puede añadir nuevos bares simplemente añadiendo un objeto a
  * este array: no hace falta tocar el resto de la aplicación.
+ *
+ * Fotos: como no se dispone de una foto real de cada local, cada bar lleva
+ * una fotografía libre de derechos de Wikimedia Commons que representa su
+ * tipo de ambiente (terraza, tapas, cervecería artesana, coctelería...). Si
+ * tienes la foto real de un bar, sustituye su campo `foto` por el enlace a
+ * esa imagen: el resto de la aplicación no necesita ningún cambio. Si una
+ * imagen no llegara a cargar, la tarjeta muestra automáticamente el icono
+ * de `imagenTexto` en su lugar.
  */
+
+// Fotografías genéricas por ambiente (Wikimedia Commons, uso libre)
+const FOTOS = {
+  tapas1: "https://commons.wikimedia.org/wiki/Special:FilePath/Tapas_bar_in_Barcelona.jpg?width=800",
+  tapas2: "https://commons.wikimedia.org/wiki/Special:FilePath/Valencia_tapas_bar.JPG?width=800",
+  tapas3: "https://commons.wikimedia.org/wiki/Special:FilePath/Madrid-Plaza_Mayor-Tapas_bar.jpg?width=800",
+  terraza: "https://commons.wikimedia.org/wiki/Special:FilePath/Terraza_Bar_Bosch_1.jpg?width=800",
+  cerveceria: "https://commons.wikimedia.org/wiki/Special:FilePath/Craft_Beer_Pub_Praha_2016.jpg?width=800",
+  historico: "https://commons.wikimedia.org/wiki/Special:FilePath/Caf%C3%A9_Bar_Bilbao_kafetegi_historikoaren_sarrera.jpg?width=800",
+  copas: "https://commons.wikimedia.org/wiki/Special:FilePath/Ascensor_Cocktail_Bar_(53367059652).jpg?width=800",
+  gastrobar: "https://commons.wikimedia.org/wiki/Special:FilePath/Wine_Bar_and_Restaurant_-_Granada_-_Spain.jpg?width=800",
+};
+
 const BARES = [
   {
     id: "comomelocomo",
@@ -27,7 +48,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar restaurante con terraza informal, situado en el centro de la ciudad, que sirve tapas y platos caseros. Especialista en cocina apta para celíacos.",
     etiquetas: ["tapas", "terraza", "sin gluten"],
-    imagenTexto: "🍽️"
+    imagenTexto: "🍽️",
+    foto: FOTOS.tapas1
   },
   {
     id: "ricoricocu",
@@ -39,7 +61,8 @@ const BARES = [
     telefono: "",
     descripcion: "Un clásico bar restaurante en el corazón de la ciudad, con una terraza muy cotizada, que ofrece una gran variedad de tapas y raciones caseras.",
     etiquetas: ["tapas", "terraza", "raciones"],
-    imagenTexto: "🍤"
+    imagenTexto: "🍤",
+    foto: FOTOS.tapas2
   },
   {
     id: "rugaca",
@@ -51,7 +74,8 @@ const BARES = [
     telefono: "",
     descripcion: "Un histórico bar en el centro de Huesca, famoso por su excelente café, tapas caseras y amplia selección de licores; perfecto para un vermut al sol o un cóctel por la tarde en un ambiente acogedor.",
     etiquetas: ["café", "vermú", "licores"],
-    imagenTexto: "☕"
+    imagenTexto: "☕",
+    foto: FOTOS.historico
   },
   {
     id: "almeriz",
@@ -63,7 +87,8 @@ const BARES = [
     telefono: "",
     descripcion: "Este novedoso bar ofrece desayunos, tapas, comidas y cenas con opciones saludables y sin gluten, además de servicios para eventos en un amplio local junto a las piscinas municipales de Almeriz.",
     etiquetas: ["desayunos", "saludable", "eventos"],
-    imagenTexto: "🥐"
+    imagenTexto: "🥐",
+    foto: FOTOS.historico
   },
   {
     id: "abadia",
@@ -75,7 +100,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar con una amplia terraza muy animada, que ofrece cócteles, cervezas y una selección de bocadillos, hamburguesas y raciones.",
     etiquetas: ["cócteles", "hamburguesas", "terraza"],
-    imagenTexto: "🍔"
+    imagenTexto: "🍔",
+    foto: FOTOS.copas
   },
   {
     id: "brasil",
@@ -87,7 +113,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar emblemático de Huesca y punto de encuentro histórico y sociológico de la ciudad. Con más de 50 años de historia, regentado por Alegría Blan, es un símbolo de las Fiestas de San Lorenzo.",
     etiquetas: ["histórico", "san lorenzo", "tapas"],
-    imagenTexto: "🎉"
+    imagenTexto: "🎉",
+    foto: FOTOS.historico
   },
   {
     id: "punto",
@@ -99,7 +126,8 @@ const BARES = [
     telefono: "",
     descripcion: "Situado en el barrio de Los Olivos, este bar ofrece una variedad gastronómica exquisita, con una terraza muy cotizada al lado del Palacio de Congresos de Huesca.",
     etiquetas: ["gastrobar", "terraza"],
-    imagenTexto: "🍷"
+    imagenTexto: "🍷",
+    foto: FOTOS.gastrobar
   },
   {
     id: "ato",
@@ -111,7 +139,8 @@ const BARES = [
     telefono: "",
     descripcion: "Situado al lado del Parque Europa, este bar tiene una terraza muy tranquila para pasar una tarde de cervezas y, si te gusta el fútbol, es de los mejores lugares para las previas de la SD Huesca, cerca de El Alcoraz.",
     etiquetas: ["terraza", "fútbol", "cervezas"],
-    imagenTexto: "⚽"
+    imagenTexto: "⚽",
+    foto: FOTOS.terraza
   },
 
   /* ---------- Bares reales de Huesca añadidos vía búsqueda en internet ---------- */
@@ -125,7 +154,8 @@ const BARES = [
     telefono: "974 22 00 54",
     descripcion: "Institución centenaria del centro de Huesca, fundada por Gregorio Bitrián y regentada hoy por sus descendientes. Reconocido con el 'Solete con Solera' de la Guía Repsol por sus desayunos, su café y sus tapas de vermú.",
     etiquetas: ["histórico", "vermú", "desayunos"],
-    imagenTexto: "🥂"
+    imagenTexto: "🥂",
+    foto: FOTOS.historico
   },
   {
     id: "barcorreos",
@@ -137,7 +167,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar tradicional de toda la vida en la zona del Coso, parada clásica para tapear frente a la antigua oficina de Correos.",
     etiquetas: ["tapas", "barra"],
-    imagenTexto: "🍺"
+    imagenTexto: "🍺",
+    foto: FOTOS.tapas3
   },
   {
     id: "hiedra1",
@@ -149,7 +180,8 @@ const BARES = [
     telefono: "618 09 61 03",
     descripcion: "Bar de tapas y raciones en pleno Coso Alto, con ambiente moderno y buen surtido de vinos de la D.O. Somontano.",
     etiquetas: ["tapas", "vinos"],
-    imagenTexto: "🌿"
+    imagenTexto: "🌿",
+    foto: FOTOS.tapas3
   },
   {
     id: "granjaanita",
@@ -161,7 +193,8 @@ const BARES = [
     telefono: "974 21 57 12",
     descripcion: "Cafetería clásica de Huesca en plena Plaza de Navarra, punto de encuentro habitual para desayunar o merendar en el centro.",
     etiquetas: ["café", "merienda"],
-    imagenTexto: "🍰"
+    imagenTexto: "🍰",
+    foto: FOTOS.historico
   },
   {
     id: "lagoyosa",
@@ -173,7 +206,8 @@ const BARES = [
     telefono: "974 03 09 32",
     descripcion: "Bar de tapas y raciones junto a la Iglesia de San Lorenzo, en una de las zonas con más ambiente del casco antiguo.",
     etiquetas: ["tapas", "san lorenzo"],
-    imagenTexto: "🥘"
+    imagenTexto: "🥘",
+    foto: FOTOS.tapas2
   },
   {
     id: "bodegapirineos",
@@ -185,7 +219,8 @@ const BARES = [
     telefono: "",
     descripcion: "Uno de los bares más tradicionales y queridos de Huesca, famoso por su ambiente acogedor y su variedad de vinagrillos, encurtidos, embutidos y quesos curados.",
     etiquetas: ["tapas", "vinagrillos", "quesos"],
-    imagenTexto: "🧀"
+    imagenTexto: "🧀",
+    foto: FOTOS.tapas1
   },
   {
     id: "dkanas",
@@ -197,7 +232,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar de tapas en una de las calles más bonitas del centro, con terraza y vistas a la Iglesia de San Lorenzo. Destacan su tartar de sardinas, el panini casero y sus tablas de queso.",
     etiquetas: ["tapas", "terraza"],
-    imagenTexto: "🐟"
+    imagenTexto: "🐟",
+    foto: FOTOS.terraza
   },
   {
     id: "davinci",
@@ -209,7 +245,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar situado en el centro de la ciudad que sirve una gran variedad de tapas y raciones para todos los gustos.",
     etiquetas: ["tapas", "raciones"],
-    imagenTexto: "🎨"
+    imagenTexto: "🎨",
+    foto: FOTOS.tapas1
   },
   {
     id: "tomatejamon",
@@ -221,7 +258,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar de tapas muy popular en el centro de Huesca, con una carta variada de raciones y buen ambiente para tapear.",
     etiquetas: ["tapas", "raciones"],
-    imagenTexto: "🍅"
+    imagenTexto: "🍅",
+    foto: FOTOS.tapas2
   },
   {
     id: "hervi",
@@ -233,7 +271,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar restaurante con una excelente ubicación a escasos metros de la Plaza Navarra, ideal para comer o tapear en pleno centro.",
     etiquetas: ["restaurante", "tapas"],
-    imagenTexto: "🍝"
+    imagenTexto: "🍝",
+    foto: FOTOS.gastrobar
   },
   {
     id: "elcirculo",
@@ -245,7 +284,8 @@ const BARES = [
     telefono: "",
     descripcion: "Coctelería del centro con ambiente agradable y una extensa carta de cócteles, entre clásicos y creaciones propias.",
     etiquetas: ["cócteles", "copas"],
-    imagenTexto: "🍸"
+    imagenTexto: "🍸",
+    foto: FOTOS.copas
   },
   {
     id: "tabernadellobo",
@@ -257,7 +297,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar de copas céntrico, uno de los locales recomendados para salir de noche en Huesca.",
     etiquetas: ["copas", "noche"],
-    imagenTexto: "🐺"
+    imagenTexto: "🐺",
+    foto: FOTOS.copas
   },
   {
     id: "monasterio",
@@ -269,7 +310,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar de copas cercano a la Plaza de San Lorenzo, muy concurrido los fines de semana por su amplia variedad de ofertas en bebidas.",
     etiquetas: ["copas", "noche"],
-    imagenTexto: "🍹"
+    imagenTexto: "🍹",
+    foto: FOTOS.copas
   },
   {
     id: "lasalastreettheatre",
@@ -281,7 +323,8 @@ const BARES = [
     telefono: "",
     descripcion: "Disco-bar en pleno centro de la ciudad, con programación musical variada; una de las opciones favoritas para tomar una copa y bailar.",
     etiquetas: ["música en vivo", "noche"],
-    imagenTexto: "🎶"
+    imagenTexto: "🎶",
+    foto: FOTOS.copas
   },
   {
     id: "lazarza",
@@ -293,7 +336,8 @@ const BARES = [
     telefono: "",
     descripcion: "Bar restaurante con una terraza con encanto, buena opción para comer o tomar algo tranquilamente en el centro.",
     etiquetas: ["terraza", "restaurante"],
-    imagenTexto: "🌳"
+    imagenTexto: "🌳",
+    foto: FOTOS.terraza
   },
   {
     id: "alfresco",
@@ -305,7 +349,8 @@ const BARES = [
     telefono: "",
     descripcion: "Cervecería artesana en pleno casco histórico que combina la cerveza de calidad con un espacio cultural: exposiciones, talleres, música y poesía.",
     etiquetas: ["cerveza artesana", "cultura"],
-    imagenTexto: "🍻"
+    imagenTexto: "🍻",
+    foto: FOTOS.cerveceria
   },
   {
     id: "localbeer",
@@ -317,7 +362,8 @@ const BARES = [
     telefono: "",
     descripcion: "Cervecería especializada en cerveza artesana con una selecta variedad de estilos, abierta desde 2021.",
     etiquetas: ["cerveza artesana"],
-    imagenTexto: "🍺"
+    imagenTexto: "🍺",
+    foto: FOTOS.cerveceria
   },
   {
     id: "casinohuesca",
@@ -329,7 +375,8 @@ const BARES = [
     telefono: "974 21 06 12",
     descripcion: "Café del histórico Casino de Huesca, en plena Plaza de Navarra; un clásico para tomar algo con solera en un edificio emblemático de la ciudad.",
     etiquetas: ["histórico", "café"],
-    imagenTexto: "🏛️"
+    imagenTexto: "🏛️",
+    foto: FOTOS.historico
   }
 ];
 
