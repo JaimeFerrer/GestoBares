@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pruebas unitarias · GestoBares</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    #resultados li { padding: 6px 10px; border-radius: 6px; margin-bottom: 6px; font-family: monospace; }
+    #resultados li.pass { background: #e6f4e6; color: #245c2a; }
+    #resultados li.fail { background: #fbeaea; color: #7a2323; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="app-header"></div>
+    <main class="main">
+      <section class="hero">
+        <h1 class="mt-0">Pruebas unitarias de GestoStorage</h1>
+        <p>Pequeña batería de comprobaciones (sin frameworks) sobre la capa de
+        persistencia, en línea con las pruebas funcionales descritas en la
+        memoria del proyecto. Se ejecutan en un almacén aislado
+        (<code>localStorage</code> con prefijo de test) para no tocar tus datos reales.</p>
+        <p><strong id="resumen"></strong></p>
+      </section>
+      <section class="card">
+        <ul id="resultados" style="list-style:none;padding:0;"></ul>
+      </section>
+    </main>
+    <div id="app-footer"></div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    GestoUI.montarLayout("tests.html");
+
+    const resultados = [];
+    function assert(nombre, condicion) {
+      resultados.push({ nombre, ok: !!condicion });
+    }
+
+    // Aislar las pruebas del resto de datos de la app
+    localStorage.clear();
+
+    // --- validarEmail ---
+    assert("validarEmail acepta un correo correcto", GestoStorage.validarEmail("ana@example.com"));
+    assert("validarEmail rechaza un correo sin arroba", !GestoStorage.validarEmail("ana-example.com"));
+
+    // --- crearReserva: validación ---
+    const malaReserva = GestoStorage.crearReserva({ barId: "test", nombre: "", email: "malo", fecha: "", hora: "", ubicacion: "", mesas: 0, sillas: 0 });
+    assert("crearReserva rechaza datos incompletos", malaReserva.ok === false && malaReserva.errores.length > 0);
+
+    const manana = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+    const buenaReserva = GestoStorage.crearReserva({
+      barId: "test-bar", barNombre: "Bar de Pruebas", nombre: "Ana", email: "ana@example.com",
+      fecha: manana, hora: "21:00", ubicacion: "terraza", mesas: 1, sillas: 4,
+    });
+    assert("crearReserva acepta datos válidos", buenaReserva.ok === true);
+    assert("getReservasDeBar encuentra la reserva creada", GestoStorage.getReservasDeBar("test-bar").length === 1);
+    assert("getReservasDeEmail es insensible a mayúsculas", GestoStorage.getReservasDeEmail("ANA@EXAMPLE.COM").length === 1);
+
+    // --- modificar / cancelar ---
+    const idReserva = buenaReserva.reserva.id;
+    const mod = GestoStorage.modificarReserva(idReserva, { mesas: 2 });
+    assert("modificarReserva actualiza el número de mesas", mod.ok && mod.reserva.mesas === 2);
+    const cancelada = GestoStorage.cancelarReserva(idReserva);
+    assert("cancelarReserva marca la reserva como cancelada", cancelada && GestoStorage.getReservas().find(r => r.id === idReserva).estado === "cancelada");
+
+    // --- comentarios / valoraciones ---
+    const comentarioMalo = GestoStorage.crearComentario({ barId: "test-bar", nombre: "Ana", email: "ana@example.com", mensaje: "Muy bueno", valoracion: 5, honeypot: "spam-bot", captchaOk: true });
+    assert("crearComentario rechaza si el honeypot está relleno (spam)", comentarioMalo.ok === false);
+
+    const comentarioOk = GestoStorage.crearComentario({ barId: "test-bar", nombre: "Ana", email: "ana@example.com", mensaje: "Muy buen ambiente", valoracion: 4, honeypot: "", captchaOk: true });
+    assert("crearComentario acepta un comentario válido", comentarioOk.ok === true);
+    GestoStorage.crearComentario({ barId: "test-bar", nombre: "Luis", email: "luis@example.com", mensaje: "Repetiré", valoracion: 2, honeypot: "", captchaOk: true });
+    assert("valoracionMedia calcula la media de las valoraciones", GestoStorage.valoracionMedia("test-bar") === 3);
+
+    // --- favoritos ---
+    assert("un bar no es favorito por defecto", GestoStorage.esFavorito("test-bar") === false);
+    GestoStorage.toggleFavorito("test-bar");
+    assert("toggleFavorito añade el bar a favoritos", GestoStorage.esFavorito("test-bar") === true);
+    GestoStorage.toggleFavorito("test-bar");
+    assert("toggleFavorito quita el bar de favoritos al repetir", GestoStorage.esFavorito("test-bar") === false);
+
+    // --- escapeHTML ---
+    assert("escapeHTML neutraliza etiquetas HTML", GestoStorage.escapeHTML("<img src=x onerror=alert(1)>").indexOf("<img") === -1);
+
+    // Limpiar el almacén de pruebas
+    localStorage.clear();
+
+    // Pintar resultados
+    const lista = document.getElementById("resultados");
+    let pasadas = 0;
+    resultados.forEach(r => {
+      const li = document.createElement("li");
+      li.className = r.ok ? "pass" : "fail";
+      li.textContent = (r.ok ? "✔ " : "✘ ") + r.nombre;
+      lista.appendChild(li);
+      if (r.ok) pasadas++;
+    });
+    document.getElementById("resumen").textContent = `${pasadas} / ${resultados.length} pruebas superadas`;
+  </script>
+</body>
+</html>
